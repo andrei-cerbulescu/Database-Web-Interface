@@ -7,6 +7,15 @@
             border: 1px solid black;
         }
     </style>
+    <script>
+
+        function setSelectedValue(element){
+
+            document.getElementById('valoareCheiePrimaraStergere').value = element.value;         
+
+        }
+
+    </script>
     <form>
         <table style="width:100%">
             <tr>
@@ -22,10 +31,13 @@
 
             <% continut.forEach(function(element) { %>
                 <tr>
-                    <% coloane.forEach(function(coloana) { %>
+                    <% coloane.forEach(function(coloana, index) { %>
 
                         <td>
-                            <%= element[coloana.name] %>
+                            <%if (index==0){%>
+                                <input type="radio" name="cheiePrimara" value="<%= element[coloana.name] %>" onclick="setSelectedValue(this)">
+                                <%} %>
+                                    <%= element[coloana.name] %>
                         </td>
 
                         <% }); %>
@@ -35,7 +47,7 @@
         </table>
 
 
-        <input type="hidden" name="tabela" value="<%=tabela%>" >
+        <input type="hidden" name="tabela" value="<%=tabela%>">
         asc
         <input type="radio" name="tipSortare" value="asc"><br>
         desc
@@ -44,4 +56,10 @@
         <button type="submit">Sorteaza</button>
     </form>
 
+    <form method="POST" action="/stergeColoanaInTabel">
+        <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
+        <input type="hidden" name="valoareCheiePrimara" value="" id="valoareCheiePrimaraStergere">
+        <input type="hidden" name="tabela" value="<%=tabela%>">
+        <button type="submit">Sterge Linia Selectata</button>
+    </form>
     <%- include('./partials/page-footer.ejs'); %>

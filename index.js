@@ -80,4 +80,14 @@ app.get('/selectareTabel', (req, res) => {
 
 })
 
+app.post('/stergeColoanaInTabel', (req, res)=>{
+
+    dbCon.query("DELETE FROM "+req.body.tabela+" where "+req.body.numeCheiePrimara+" = "+req.body.valoareCheiePrimara, function(err, result, fields){
+
+        res.redirect('/selectareTabel?tabela='+req.body.tabela)
+
+    })
+
+})
+
 app.listen(3000, () => console.log('Server running on port 3000!'))
