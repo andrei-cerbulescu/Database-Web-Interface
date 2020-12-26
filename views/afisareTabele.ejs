@@ -10,8 +10,10 @@
     <script>
 
         function setSelectedValue(element){
-
-            document.getElementById('valoareCheiePrimaraStergere').value = element.value;         
+            obiecteClasa = document.getElementsByClassName('valoareCheiePrimara');
+            for(i=0;i<obiecteClasa.length;i++){
+                obiecteClasa[i].value = element.value
+            }
 
         }
 
@@ -58,8 +60,16 @@
 
     <form method="POST" action="/stergeColoanaInTabel">
         <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
-        <input type="hidden" name="valoareCheiePrimara" value="" id="valoareCheiePrimaraStergere">
+        <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
         <input type="hidden" name="tabela" value="<%=tabela%>">
         <button type="submit">Sterge Linia Selectata</button>
     </form>
+
+    <form method="POST" action="/editeazaElementInTabel">
+        <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
+        <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
+        <input type="hidden" name="tabela" value="<%=tabela%>">
+        <button type="submit">Modifica Datele</button>
+    </form>
+
     <%- include('./partials/page-footer.ejs'); %>

@@ -82,11 +82,41 @@ app.get('/selectareTabel', (req, res) => {
 
 app.post('/stergeColoanaInTabel', (req, res)=>{
 
-    dbCon.query("DELETE FROM "+req.body.tabela+" where "+req.body.numeCheiePrimara+" = "+req.body.valoareCheiePrimara, function(err, result, fields){
+    dbCon.query("DELETE FROM "+req.body.tabela+" WHERE "+req.body.numeCheiePrimara+" = "+req.body.valoareCheiePrimara, function(err, result, fields){
 
         res.redirect('/selectareTabel?tabela='+req.body.tabela)
 
     })
+
+})
+
+app.post('/editeazaElementInTabel', (req, res)=>{
+
+    console.log(req.body)
+
+    dbCon.query("SELECT * FROM "+req.body.tabela+" WHERE "+req.body.numeCheiePrimara+" = "+req.body.valoareCheiePrimara, function(err, result, fields){
+
+        res.render('editeazaDate.ejs',{
+            tabela: req.body.tabela,
+            numeCheiePrimara: req.body.numeCheiePrimara,
+            valoareCheiePrimara: req.body.valoareCheiePrimara,
+            result: result,
+            coloane: fields
+        })
+
+    })
+
+})
+
+app.post('/postActualizareDate', (req, res)=>{
+
+    console.log(req.body)
+    stringQuery = "UPDATE "+req.body._tabela
+
+    
+
+    stringQuery+=" WHERE "+req.body._numeCheiePrimara+" = "+req.body._valoareCheiePrimara
+    console.log(stringQuery)
 
 })
 

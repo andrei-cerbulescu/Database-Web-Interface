@@ -1,0 +1,50 @@
+<%- include('./partials/page-header.ejs'); %>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+
+    <form method="POST" action="/postActualizareDate">
+        <table style="width:100%">
+            <tr>
+                <% coloane.forEach(function(coloana) { %>
+
+                    <th>
+                        <%= coloana.name %>
+                    </th>
+
+                    <% }); %>
+            </tr>
+
+            <% result.forEach(function(element) { %>
+                <tr>
+                    <% coloane.forEach(function(coloana, index) { %>
+
+                        <td>
+                            <%if (index==0){%>
+                                <%= element[coloana.name] %>
+                                <%} else{%>
+                                    <input type="text" name="<%=coloana.name%>" value="<%= element[coloana.name] %>">
+                                <%} %>
+                            
+                        </td>
+
+                        <% }); %>
+                </tr>
+                <% }); %>
+
+        </table>
+
+        <input type="hidden" name="_numeCheiePrimara" value="<%=coloane[0].name%>">
+        <input type="hidden" name="_valoareCheiePrimara" value="<%=valoareCheiePrimara%>" class="valoareCheiePrimara">
+        <input type="hidden" name="_tabela" value="<%=tabela%>">
+
+        <button type="submit">Modifica</button>
+
+    </form>
+
+    <%- include('./partials/page-footer.ejs'); %>
