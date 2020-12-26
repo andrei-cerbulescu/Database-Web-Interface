@@ -1,33 +1,47 @@
 <%- include('./partials/page-header.ejs'); %>
 
-<style>
-    table, th, td {
-      border: 1px solid black;
-    }
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
     </style>
-
-    <table style="width:100%">
-        <tr>
-            <% coloane.forEach(function(coloana) { %>
-
-                <th>
-                    <%= coloana.name %>
-                </th>
-
-                <% }); %>
-        </tr>
-
-        <% continut.forEach(function(element) { %>
+    <form>
+        <table style="width:100%">
             <tr>
                 <% coloane.forEach(function(coloana) { %>
 
-                    <td>
-                        <%= element[coloana.name] %>
-                    </td>
+                    <th>
+                        <%= coloana.name %>
+                            <input type="radio" name="coloanaSortare" value="<%= coloana.name %>">
+                    </th>
 
                     <% }); %>
             </tr>
-            <% }); %>
 
-    </table>
+            <% continut.forEach(function(element) { %>
+                <tr>
+                    <% coloane.forEach(function(coloana) { %>
+
+                        <td>
+                            <%= element[coloana.name] %>
+                        </td>
+
+                        <% }); %>
+                </tr>
+                <% }); %>
+
+        </table>
+
+
+        <input type="hidden" name="tabela" value="<%=tabela%>" >
+        asc
+        <input type="radio" name="tipSortare" value="asc"><br>
+        desc
+        <input type="radio" name="tipSortare" value="desc"><br>
+
+        <button type="submit">Sorteaza</button>
+    </form>
+
     <%- include('./partials/page-footer.ejs'); %>

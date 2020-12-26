@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 
         console.log(result)
 
-        res.render('index.ejs',{
+        res.render('index.ejs', {
             tabele: result
         })
 
@@ -52,13 +52,26 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/selectareTabel', (req, res)=>{
+app.get('/selectareTabel', (req, res) => {
     var tabela = req.query.tabela;
-    
-    dbCon.query("SELECT * FROM "+tabela, function(err, result, fields){
 
-        console.log(result, fields)
+    var coloanaSortare = ""
+    if (req.query.coloanaSortare) {
+
+        coloanaSortare = " ORDER BY " + req.query.coloanaSortare;
+
+    }
+
+    var tipSortare = ""
+    if (coloanaSortare != "") {
+        if (req.query.tipSortare == "desc") {
+            tipSortare = " desc"
+        }
+    }
+    dbCon.query("SELECT * FROM " + tabela + coloanaSortare + tipSortare, function (err, result, fields) {
+
         res.render('afisareTabele.ejs', {
+            tabela: tabela,
             continut: result,
             coloane: fields
         })
