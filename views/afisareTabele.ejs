@@ -1,0 +1,33 @@
+<%- include('./partials/page-header.ejs'); %>
+
+<style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+
+    <table style="width:100%">
+        <tr>
+            <% coloane.forEach(function(coloana) { %>
+
+                <th>
+                    <%= coloana.name %>
+                </th>
+
+                <% }); %>
+        </tr>
+
+        <% continut.forEach(function(element) { %>
+            <tr>
+                <% coloane.forEach(function(coloana) { %>
+
+                    <td>
+                        <%= element[coloana.name] %>
+                    </td>
+
+                    <% }); %>
+            </tr>
+            <% }); %>
+
+    </table>
+    <%- include('./partials/page-footer.ejs'); %>

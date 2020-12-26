@@ -1,0 +1,16 @@
+<%- include('./partials/page-header.ejs'); %>
+    <form id="selectare-tabel" method="GET" action="/selectareTabel">
+        <% tabele.forEach(function(tabel) { %>
+            <br>
+            <div>
+                Nume Tabel: <strong>
+                    <%= tabel.Tables_in_onlinegame %>
+                </strong>
+                <input type="radio" name="tabela" value="<%= tabel.Tables_in_onlinegame %>">
+                <br>
+            </div>
+            <% }); %>
+            
+            <input type="submit" value="Alege">
+    </form>
+    <%- include('./partials/page-footer.ejs'); %>
