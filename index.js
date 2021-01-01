@@ -202,7 +202,7 @@ app.get('/login', (req, res) => {
         try {
           dbCon.query("INSERT INTO Cont(numeCont, adresaMail, hashParola, saltParola, dataCreare)VALUES('" + req.body.numeCont + "', '" + req.body.email + "', '" + hash + "', '" + salt + "', '" + anLunaZi + "')")
   
-          res.redirect('/')
+          res.redirect('/login')
   
         }
   
