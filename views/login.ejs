@@ -1,0 +1,37 @@
+<%- include('./partials/page-header.ejs'); %>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+    <form id="login-form" method="POST" action="/loginRequest">
+
+        <div>
+            <label for="email">Email Address:</label>
+            <input type="text" id="email" name="email" , class="form-control">
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" , name="password" , class="form-control">
+        </div>
+
+        <input type="submit" value="Login">
+    </form>
+
+    <form id="creaza-cont-form" method="POST" action="/creazaContPost">
+
+        <input type="submit" value="Creaza Cont">
+    
+    </form>
+
+    
+
+
+</body>
+<%- include('./partials/page-footer.ejs'); %>

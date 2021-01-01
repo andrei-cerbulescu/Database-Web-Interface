@@ -1,0 +1,38 @@
+<%- include('./partials/page-header.ejs'); %>
+
+<script>
+    function stergePersonaj(){
+        var idPersonaj = document.getElementsByName
+        location.reload()
+    }
+    function alegePersonaj(){
+        document.getElementById('actiune').value = "alege"
+        document.getElementById("selectare-personaj").submit()
+    }
+</script>
+
+<h1><%=pageTitle%></h1>
+<% if (user) { %>
+    <h1>user:<%=user.numeCont%></h1>
+
+    <form id="selectare-personaj" method="POST" action="/selectarePersonaj"> 
+        <input type="hidden" name="actiune" id="actiune">
+    <% characters.forEach(function(character) { %>
+        <br>
+        <div>
+            nume: <strong><%= character.numePersonaj %></strong>
+            <input type="radio" name="idPersonaj" value="<%= character.idPersonaj %>">
+            
+            <br>
+            nivel: <%= character.nivelPersonaj %><br>
+        </div>
+    <% }); %>
+    </form>
+    <Button type="button" id="alegePersonaj" onclick="alegePersonaj()">Alege Personaj</Button>
+    <Button type="button" id="stergePersonaj" onclick="stergePersonaj()">Sterge Personaj</Button>
+
+<% }
+else { %>
+    First time here
+<% } %>
+<%- include('./partials/page-footer.ejs'); %>

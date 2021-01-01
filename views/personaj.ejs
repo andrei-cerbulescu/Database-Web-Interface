@@ -1,0 +1,33 @@
+<%- include('./partials/page-header.ejs'); %>
+
+<% if (user) { %>
+    <h1>User: <%=user.numeCont%></h1>
+    <h1>Nume Personaj: <%=resultPersonaj[0].numePersonaj%></h1>
+    <h1>Nivel: <%=resultPersonaj[0].nivelPersonaj%></h1>
+    <h1>Ai urmatoarele obiecte:</h1>
+
+    <% obiecte.forEach(function(obiect) { %>
+        <br>
+        <div>
+            Nume Obiect: <strong><%= obiect.numeObiect %></strong><br>
+            Cantitate Obiect: <%= obiect.nrObiecte %>            
+            <br>
+        </div>
+    <% }); %>
+
+    <h1>Ai urmatoarele abilitati:</h1>
+    <% abilitati.forEach(function(abilitate) { %>
+        <br>
+        <div>
+            Nume Abilitate: <strong><%= abilitate.numeAbilitate %></strong>            
+            <br>
+        </div>
+    <% }); %>
+
+
+<% }
+
+else { %>
+    Trebuie sa te loghezi mai intai!
+<% } %>
+<%- include('./partials/page-footer.ejs'); %>
