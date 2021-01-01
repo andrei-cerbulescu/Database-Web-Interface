@@ -80,23 +80,23 @@ app.get('/selectareTabel', (req, res) => {
 
 })
 
-app.post('/stergeColoanaInTabel', (req, res)=>{
+app.post('/stergeColoanaInTabel', (req, res) => {
 
-    dbCon.query("DELETE FROM "+req.body.tabela+" WHERE "+req.body.numeCheiePrimara+" = "+req.body.valoareCheiePrimara, function(err, result, fields){
+    dbCon.query("DELETE FROM " + req.body.tabela + " WHERE " + req.body.numeCheiePrimara + " = " + req.body.valoareCheiePrimara, function (err, result, fields) {
 
-        res.redirect('/selectareTabel?tabela='+req.body.tabela)
+        res.redirect('/selectareTabel?tabela=' + req.body.tabela)
 
     })
 
 })
 
-app.post('/editeazaElementInTabel', (req, res)=>{
+app.post('/editeazaElementInTabel', (req, res) => {
 
     console.log(req.body)
 
-    dbCon.query("SELECT * FROM "+req.body.tabela+" WHERE "+req.body.numeCheiePrimara+" = "+req.body.valoareCheiePrimara, function(err, result, fields){
+    dbCon.query("SELECT * FROM " + req.body.tabela + " WHERE " + req.body.numeCheiePrimara + " = " + req.body.valoareCheiePrimara, function (err, result, fields) {
 
-        res.render('editeazaDate.ejs',{
+        res.render('editeazaDate.ejs', {
             tabela: req.body.tabela,
             numeCheiePrimara: req.body.numeCheiePrimara,
             valoareCheiePrimara: req.body.valoareCheiePrimara,
@@ -108,15 +108,41 @@ app.post('/editeazaElementInTabel', (req, res)=>{
 
 })
 
-app.post('/postActualizareDate', (req, res)=>{
+app.post('/postActualizareDate', (req, res) => {
 
-    console.log(req.body)
-    stringQuery = "UPDATE "+req.body._tabela
+    //console.log(req.body)
+    stringQuery = "UPDATE " + req.body._tabela + " SET ";
+    isFirst = 0
+    Object.keys(req.body).forEach(cheie => {
 
+        if (cheie.charAt(0) != "_") {
+
+            if (req.body[cheie] != '') {
+
+                if (isFirst == 0) {
+                    isFirst = 1;
+                }
     
+                else {
+    
+                    stringQuery += ", "
+    
+                }
 
-    stringQuery+=" WHERE "+req.body._numeCheiePrimara+" = "+req.body._valoareCheiePrimara
-    console.log(stringQuery)
+                stringQuery += cheie + "=" + "'" + req.body[cheie] + "'";
+
+            }
+
+        }
+
+    });
+
+    stringQuery += " WHERE " + req.body._numeCheiePrimara + " = " + req.body._valoareCheiePrimara
+    dbCon.query(stringQuery, (err, result, fields)=>{
+
+        res.redirect('/selectareTabel?tabela=' + req.body._tabela)
+
+    })
 
 })
 
