@@ -1,11 +1,10 @@
 <%- include('./partials/page-header.ejs'); %>
 
-
 <style>
     table,
     th,
     td {
-        border: 1px solid black;
+        border: 1px solid rgb(0, 0, 0);
     }
 </style>
 
@@ -13,8 +12,7 @@
 
 <body>
 
-
-    <form method="POST" action="/postActualizareDate">
+    <form method="POST" action="/postAdaugaElement">
         <table style="width:100%">
             <tr>
                 <% coloane.forEach(function(coloana) { %>
@@ -26,30 +24,23 @@
                     <% }); %>
             </tr>
 
-            <% result.forEach(function(element) { %>
                 <tr>
                     <% coloane.forEach(function(coloana, index) { %>
 
                         <td>
-                            <%if (index==0){%>
-                                <%= element[coloana.name] %>
-                                <%} else{%>
-                                    <input type="text" name="<%=coloana.name%>" placeholder="<%= element[coloana.name] %>" value = "">
-                                <%} %>
+
+                                    <input type="text" name="<%=coloana.name%>" value = "">
+                                
                             
                         </td>
 
                         <% }); %>
                 </tr>
-                <% }); %>
 
         </table>
 
-        <input type="hidden" name="_numeCheiePrimara" value="<%=coloane[0].name%>">
-        <input type="hidden" name="_valoareCheiePrimara" value="<%=valoareCheiePrimara%>" class="valoareCheiePrimara">
         <input type="hidden" name="_tabela" value="<%=tabela%>">
-
-        <button type="submit">Modifica</button>
+        <button type="submit">Adauga</button>
 
     </form>
 

@@ -76,4 +76,11 @@
         <button type="submit">Modifica Datele</button>
     </form>
 
+    <form method="POST" action="/adaugaElement">
+        <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
+        <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
+        <input type="hidden" name="tabela" value="<%=tabela%>">
+        <button type="submit">Adauga un Element</button>
+    </form>
+
     <%- include('./partials/page-footer.ejs'); %>
