@@ -5,6 +5,7 @@
 <body>
 
     <form id="selectare-tabel" method="GET" action="/selectareTabel">
+        <h5>Tabele</h5>
         <% tabele.forEach(function(tabel) { %>
             <br>
             <div>
@@ -16,6 +17,19 @@
             </div>
             <% }); %>
             
+            <br><h5>View</h5>
+
+            <%  view.forEach(function(elementView) { %>
+            <br>
+                <div>
+                    Nume View: <strong>
+                        <%= elementView.Tables_in_onlinegame %>
+                    </strong>
+                    <input type="radio" name="tabela" value="<%= elementView.Tables_in_onlinegame %>">
+                    <br>
+                </div>
+                <% }); %>
+
             <input type="submit" value="Alege">
     </form>
 

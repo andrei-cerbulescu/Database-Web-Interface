@@ -37,11 +37,18 @@ app.use(session({ secret: 'ssshhhhh' }));
 
 app.get('/', (req, res) => {
 
-  dbCon.query("SHOW TABLES", function (err, result, fields) {
+  dbCon.query("show full tables where Table_Type = 'BASE TABLE'", function (err, resultTabele, fields) {
 
-    res.render('index.ejs', {
-      tabele: result
+    dbCon.query("show full tables where Table_Type = 'VIEW'", function (err, resultView, fields) {
+
+      res.render('index.ejs', {
+        tabele: resultTabele,
+        view: resultView
+      })
+
     })
+
+
 
 
   })
@@ -51,7 +58,7 @@ app.get('/', (req, res) => {
 
 app.get('/cautare', (req, res) => {
 
-  stringQuery = "SELECT cont.idCont, cont.numeCont, SUM(personaj.bani) AS Total FROM cont, personaj WHERE cont.idCont = personaj.idCont GROUP BY cont.idCont HAVING total >="+req.query.value
+  stringQuery = "SELECT cont.idCont, cont.numeCont, SUM(personaj.bani) AS Total FROM cont, personaj WHERE cont.idCont = personaj.idCont GROUP BY cont.idCont HAVING total >=" + req.query.value
 
   dbCon.query(stringQuery, function (err, result, fields) {
 
@@ -156,9 +163,9 @@ app.post('/postAdaugaElement', (req, res) => {
 
   queryString += ")"
 
-  dbCon.query(queryString, (err, result, rows)=>{
+  dbCon.query(queryString, (err, result, rows) => {
 
-    res.redirect("/selectareTabel?tabela="+req.body._tabela)
+    res.redirect("/selectareTabel?tabela=" + req.body._tabela)
 
   })
 
