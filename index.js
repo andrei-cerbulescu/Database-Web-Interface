@@ -73,6 +73,23 @@ app.get('/cautare', (req, res) => {
 
 })
 
+app.get('/cautaInventar', (req, res) => {
+
+  stringQuery = "SELECT * FROM slot JOIN obiect ON slot.idObiect = obiect.idObiect JOIN personaj ON slot.idPersonaj = personaj.idPersonaj WHERE personaj.idPersonaj = " + req.query.value
+
+  dbCon.query(stringQuery, function (err, result, fields) {
+
+    res.render('cautaInventar.ejs', {
+      result: result,
+      coloane: fields,
+      value: req.query.value
+    })
+
+  })
+
+
+})
+
 
 app.get('/selectareTabel', (req, res) => {
   var tabela = req.query.tabela;
