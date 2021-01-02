@@ -49,6 +49,24 @@ app.get('/', (req, res) => {
 
 })
 
+app.get('/cautare', (req, res) => {
+
+  stringQuery = "SELECT cont.idCont, cont.numeCont, SUM(personaj.bani) AS Total FROM cont, personaj WHERE cont.idCont = personaj.idCont GROUP BY cont.idCont HAVING total >="+req.query.value
+
+  dbCon.query(stringQuery, function (err, result, fields) {
+
+    res.render('cautare.ejs', {
+      result: result,
+      coloane: fields,
+      value: req.query.value
+    })
+
+  })
+
+
+})
+
+
 app.get('/selectareTabel', (req, res) => {
   var tabela = req.query.tabela;
 

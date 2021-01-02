@@ -1,0 +1,44 @@
+<%- include('./partials/page-header.ejs'); %>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid rgb(0, 0, 0);
+        }
+    </style>
+
+    </head>
+
+    <body>
+
+        <h1>Afisam toate conturile care ale caror personaje au in total cel putin <%= value %> de bani</h1>
+
+        <table style="width:100%">
+
+            <tr>
+                <% coloane.forEach(function(coloana) { %>
+
+                    <th>
+                        <%= coloana.name %>
+                    </th>
+
+                    <% }); %>
+            </tr>
+
+            <% result.forEach(function(element) { %>
+                <tr>
+                    <% coloane.forEach(function(coloana, index) { %>
+
+                        <td>
+                                    <%= element[coloana.name] %>
+                        </td>
+
+                        <% }); %>
+                </tr>
+                <% }); %>
+        </table>
+
+    </body>
+
+    <%- include('./partials/page-footer.ejs'); %>

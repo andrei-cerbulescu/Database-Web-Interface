@@ -20,6 +20,13 @@
     </form>
 
     <a href="/login">Login User</a>
-    <br>
+    <br><br>
+    
+<form id="cautare" method="GET" action="/cautare">
+    <h5>Cauta toate conturile care au o suma minima de bani</h5>
+    <input type="text" name="value" placeholder="Valoare minima">
+    <input type="submit" value="Cauta">
+
+</form>
 
     <%- include('./partials/page-footer.ejs'); %>
