@@ -75,7 +75,7 @@ app.get('/cautare', (req, res) => {
 
 app.get('/cautaInventar', (req, res) => {
 
-  stringQuery = "SELECT personaj.numePersonaj, slot.idSlot, slot.nrObiecte, slot.idObiect, obiect.numeObiect FROM slot JOIN obiect ON slot.idObiect = obiect.idObiect JOIN personaj ON slot.idPersonaj = personaj.idPersonaj WHERE personaj.idPersonaj = " + req.query.value
+  stringQuery = "SELECT personaj.numePersonaj, slot.idSlot, slot.nrObiecte, slot.idObiect, obiect.numeObiect FROM slot JOIN obiect ON slot.idObiect = obiect.idObiect JOIN personaj ON slot.idPersonaj = personaj.idPersonaj WHERE slot.idObiect IS NOT NULL AND personaj.idPersonaj = " + req.query.value
 
   dbCon.query(stringQuery, function (err, result, fields) {
 
