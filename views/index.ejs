@@ -5,6 +5,8 @@
 <body>
 
     <form id="selectare-tabel" method="GET" action="/selectareTabel">
+        <h5>Listare continut cu posibilitate de sortare</h5>
+        <h5>Modificare informatii (edit/stergere)</h5><br>
         <h5>Tabele</h5>
         <% tabele.forEach(function(tabel) { %>
             <br>
@@ -17,7 +19,7 @@
             </div>
             <% }); %>
             
-            <br><h5>View</h5>
+            <br><h5>Vizualizari</h5>
 
             <%  view.forEach(function(elementView) { %>
             <br>
@@ -37,6 +39,7 @@
     <br><br>
     
 <form id="cautare" method="GET" action="/cautare">
+    <h5>Afisarea rezultatului unei cereri care foloseste functii grup si o clauza having</h5>
     <h5>Cauta toate conturile care au o suma minima de bani</h5>
     <input type="text" name="value" placeholder="Valoare minima">
     <input type="submit" value="Cauta">
@@ -44,6 +47,7 @@
 </form>
 
 <form id="cautare" method="GET" action="/cautaInventar">
+    <h5>Afisare rezultatului unei cereri care contine informatii din cel putin 3 tabele si le filtreaza cu ajutorul a cel putin 2 conditii</h5>
     <h5>Vezi ce obiecte detine un anumit personaj</h5>
     <input type="text" name="value" placeholder="ID Personaj">
     <input type="submit" value="Cauta">

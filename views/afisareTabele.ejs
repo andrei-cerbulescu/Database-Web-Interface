@@ -3,88 +3,90 @@
     </head>
 
     <body>
-            <style>
-                table,
-                th,
-                td {
-                    border: 1px solid black;
-                }
-            </style>
-            <script>
+        <style>
+            table,
+            th,
+            td {
+                border: 1px solid black;
+            }
+        </style>
+        <script>
 
-                function setSelectedValue(element) {
-                    obiecteClasa = document.getElementsByClassName('valoareCheiePrimara');
-                    for (i = 0; i < obiecteClasa.length; i++) {
-                        obiecteClasa[i].value = element.value
-                    }
-
+            function setSelectedValue(element) {
+                obiecteClasa = document.getElementsByClassName('valoareCheiePrimara');
+                for (i = 0; i < obiecteClasa.length; i++) {
+                    obiecteClasa[i].value = element.value
                 }
 
-            </script>
-            <form>
-                <table style="width:100%">
+            }
+
+        </script>
+        <h5>Listare continut cu posibilitate de sortare</h5>
+        <h5>Modificare informatii (edit/stergere)</h5><br>
+        <form>
+            <table style="width:100%">
+                <tr>
+                    <% coloane.forEach(function(coloana) { %>
+
+                        <th>
+                            <%= coloana.name %>
+                                <input type="radio" name="coloanaSortare" value="<%= coloana.name %>">
+                        </th>
+
+                        <% }); %>
+                </tr>
+
+                <% continut.forEach(function(element) { %>
                     <tr>
-                        <% coloane.forEach(function(coloana) { %>
+                        <% coloane.forEach(function(coloana, index) { %>
 
-                            <th>
-                                <%= coloana.name %>
-                                    <input type="radio" name="coloanaSortare" value="<%= coloana.name %>">
-                            </th>
+                            <td>
+                                <%if (index==0){%>
+                                    <input type="radio" name="cheiePrimara" value="<%= element[coloana.name] %>"
+                                        onclick="setSelectedValue(this)">
+                                    <%} %>
+                                        <%= element[coloana.name] %>
+                            </td>
 
                             <% }); %>
                     </tr>
+                    <% }); %>
 
-                    <% continut.forEach(function(element) { %>
-                        <tr>
-                            <% coloane.forEach(function(coloana, index) { %>
-
-                                <td>
-                                    <%if (index==0){%>
-                                        <input type="radio" name="cheiePrimara" value="<%= element[coloana.name] %>"
-                                            onclick="setSelectedValue(this)">
-                                        <%} %>
-                                            <%= element[coloana.name] %>
-                                </td>
-
-                                <% }); %>
-                        </tr>
-                        <% }); %>
-
-                </table>
+            </table>
 
 
+            <input type="hidden" name="tabela" value="<%=tabela%>">
+            asc
+            <input type="radio" name="tipSortare" value="asc"><br>
+            desc
+            <input type="radio" name="tipSortare" value="desc"><br>
+
+            <button type="submit">Sorteaza</button>
+        </form>
+
+       
+
+            <form method="POST" action="/stergeColoanaInTabel">
+                <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
+                <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
                 <input type="hidden" name="tabela" value="<%=tabela%>">
-                asc
-                <input type="radio" name="tipSortare" value="asc"><br>
-                desc
-                <input type="radio" name="tipSortare" value="desc"><br>
-
-                <button type="submit">Sorteaza</button>
+                <button type="submit">Sterge Linia Selectata</button>
             </form>
 
-            <%if (!isView){ %>
+            <form method="POST" action="/editeazaElementInTabel">
+                <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
+                <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
+                <input type="hidden" name="tabela" value="<%=tabela%>">
+                <button type="submit">Modifica Datele</button>
+            </form>
 
-                <form method="POST" action="/stergeColoanaInTabel">
-                    <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
-                    <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
-                    <input type="hidden" name="tabela" value="<%=tabela%>">
-                    <button type="submit">Sterge Linia Selectata</button>
-                </form>
+            <form method="POST" action="/adaugaElement">
+                <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
+                <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
+                <input type="hidden" name="tabela" value="<%=tabela%>">
+                <button type="submit">Adauga un Element</button>
+            </form>
 
-                <form method="POST" action="/editeazaElementInTabel">
-                    <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
-                    <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
-                    <input type="hidden" name="tabela" value="<%=tabela%>">
-                    <button type="submit">Modifica Datele</button>
-                </form>
+  
 
-                <form method="POST" action="/adaugaElement">
-                    <input type="hidden" name="numeCheiePrimara" value="<%=coloane[0].name%>">
-                    <input type="hidden" name="valoareCheiePrimara" value="" class="valoareCheiePrimara">
-                    <input type="hidden" name="tabela" value="<%=tabela%>">
-                    <button type="submit">Adauga un Element</button>
-                </form>
-
-                <%}%>
-
-                    <%- include('./partials/page-footer.ejs'); %>
+                <%- include('./partials/page-footer.ejs'); %>
