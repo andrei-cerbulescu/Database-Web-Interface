@@ -109,11 +109,19 @@ app.get('/selectareTabel', (req, res) => {
   }
   dbCon.query("SELECT * FROM " + tabela + coloanaSortare + tipSortare, function (err, result, fields) {
 
-    res.render('afisareTabele.ejs', {
-      tabela: tabela,
-      continut: result,
-      coloane: fields
+    dbCon.query("SHOW FULL TABLES LIKE '"+tabela+"'", function(errView, resView, fieldView){
+
+      res.render('afisareTabele.ejs', {
+        tabela: tabela,
+        continut: result,
+        coloane: fields,
+        isView: resView[0].Table_type == "VIEW"
+      })
+
+
     })
+
+
 
   })
 
