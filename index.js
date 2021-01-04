@@ -75,7 +75,7 @@ app.get('/cautare', (req, res) => {
 
 app.get('/cautaInventar', (req, res) => {
 
-  stringQuery = "SELECT * FROM slot JOIN obiect ON slot.idObiect = obiect.idObiect JOIN personaj ON slot.idPersonaj = personaj.idPersonaj WHERE personaj.idPersonaj = " + req.query.value
+  stringQuery = "SELECT personaj.numePersonaj, slot.idSlot, slot.nrObiecte, slot.idObiect, obiect.numeObiect FROM slot JOIN obiect ON slot.idObiect = obiect.idObiect JOIN personaj ON slot.idPersonaj = personaj.idPersonaj WHERE personaj.idPersonaj = " + req.query.value
 
   dbCon.query(stringQuery, function (err, result, fields) {
 
@@ -109,7 +109,7 @@ app.get('/selectareTabel', (req, res) => {
   }
   dbCon.query("SELECT * FROM " + tabela + coloanaSortare + tipSortare, function (err, result, fields) {
 
-    dbCon.query("SHOW FULL TABLES LIKE '"+tabela+"'", function(errView, resView, fieldView){
+    dbCon.query("SHOW FULL TABLES LIKE '" + tabela + "'", function (errView, resView, fieldView) {
 
       res.render('afisareTabele.ejs', {
         tabela: tabela,
@@ -343,39 +343,56 @@ app.post('/selectarePersonaj', (req, res) => {
     return
   }
 
-  dbCon.query("SELECT * FROM personaj WHERE personaj.idPersonaj = " + req.body.idPersonaj, function (err, datePersonaj, fields) {
+  if (req.body.actiune == "stergere") {
 
-    dbCon.query("SELECT * FROM slot JOIN obiect WHERE slot.idObiect = obiect.idObiect AND slot.idPersonaj = " + req.body.idPersonaj, function (err, resultPersonajSlot, fields) {
+    sqlString = "DELETE FROM personaj WHERE personaj.idPersonaj = " + req.body.idPersonaj;
 
-      if (err) {
-        throw err
-      }
+    dbCon.query(sqlString, function (err, result, fields) {
 
-      dbCon.query("SELECT * FROM clasa WHERE idClasa = " + datePersonaj[0].idClasa, function (err, resultClasa, fields) {
+      res.redirect('/post-login')
+      return;
+
+    })
+
+
+  }
+
+  else {
+
+    dbCon.query("SELECT * FROM personaj WHERE personaj.idPersonaj = " + req.body.idPersonaj, function (err, datePersonaj, fields) {
+
+      dbCon.query("SELECT * FROM slot JOIN obiect WHERE slot.idObiect = obiect.idObiect AND slot.idPersonaj = " + req.body.idPersonaj, function (err, resultPersonajSlot, fields) {
 
         if (err) {
           throw err
         }
 
-        dbCon.query("SELECT * FROM personaj JOIN abilitati ON personaj.idClasa = abilitati.idClasa WHERE personaj.nivelPersonaj >= abilitati.nivelMinim AND personaj.idPersonaj = " + req.body.idPersonaj, function (err, resultAbilitati, fields) {
+        dbCon.query("SELECT * FROM clasa WHERE idClasa = " + datePersonaj[0].idClasa, function (err, resultClasa, fields) {
 
           if (err) {
             throw err
           }
 
-          res.render('personaj.ejs',
-            {
-              user: session.user,
-              resultPersonaj: datePersonaj,
-              clasa: resultClasa,
-              abilitati: resultAbilitati,
-              obiecte: resultPersonajSlot
-            });
+          dbCon.query("SELECT * FROM personaj JOIN abilitati ON personaj.idClasa = abilitati.idClasa WHERE personaj.nivelPersonaj >= abilitati.nivelMinim AND personaj.idPersonaj = " + req.body.idPersonaj, function (err, resultAbilitati, fields) {
 
+            if (err) {
+              throw err
+            }
+
+            res.render('personaj.ejs',
+              {
+                user: session.user,
+                resultPersonaj: datePersonaj,
+                clasa: resultClasa,
+                abilitati: resultAbilitati,
+                obiecte: resultPersonajSlot
+              });
+
+          })
         })
       })
     })
-  })
+  }
 })
 
 
